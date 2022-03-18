@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --white:#FFF;
+    --blue: #2A7AE4;
+    --blue-light: rgba(234, 242, 253, 1);
+    --gray-light: #F5F5F5;
+    --gray-text: #A2A2A2;
+    --gray-dark: #464646;
+    --gray-login: #E5E5E5;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    color: var(--gray-dark);
+}
