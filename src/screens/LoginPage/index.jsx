@@ -6,7 +6,7 @@ function LoginPage() {
             <form>
                 <h4>Iniciar Sessão</h4>
                 <input type="text" placeholder='Escreva seu email'/>
-                <input type="text" placeholder='Escreva sua senha'/>
+                <input type="password" placeholder='Escreva sua senha'/>
                 <button>Entrar</button>
             </form>
         </div>

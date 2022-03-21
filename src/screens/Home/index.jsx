@@ -19,54 +19,28 @@ function Home() {
                 </div>
             </div>
             <div className={style.productsArea}>
-                <div className={style.productContainer}>
-                    <header>
-                        <h3>Star Wars</h3>
-                        <span>
-                            <Link href={'/produtos'}>
-                                Ver tudo
-                            </Link>
-                            <VscArrowRight />
-                        </span>
-                    </header>
-                    <div className={style.productsList}>
-                        {products['star-wars'].map(item =>(
-                            <ProductCard  key={item.id} product={item} />
-                        ))}
+                {products.categories.map(item => (
+                    <div key={item.id} className={style.productContainer}>
+                        <>
+                            <header>
+                                <h3>{item.name}</h3>
+                                <span>
+                                    <Link href={'/products'}>
+                                        Ver tudo
+                                    </Link>
+                                    <VscArrowRight />
+                                </span>
+                            </header>
+                            <div className={style.productsList}>
+                                {products.products.map(product =>(
+                                    product.category === item.name && (
+                                        <ProductCard  key={product.id} product={product} />
+                                    )
+                                ))}
+                            </div>
+                        </>
                     </div>
-                </div>
-                <div className={style.productContainer}>
-                    <header>
-                        <h3>Consoles</h3>
-                        <span>
-                            <Link href={'/produtos'}>
-                                Ver tudo
-                            </Link>
-                            <VscArrowRight />
-                        </span>
-                    </header>
-                    <div className={style.productsList}>
-                        {products['consoles'].map(item =>(
-                            <ProductCard  key={item.id} product={item} />
-                        ))}
-                    </div>
-                </div>
-                <div className={style.productContainer}>
-                    <header>
-                        <h3>Diversos</h3>
-                        <span>
-                            <Link href={'/produtos'}>
-                                Ver tudo
-                            </Link>
-                            <VscArrowRight />
-                        </span>
-                    </header>
-                    <div className={style.productsList}>
-                        {products['diversos'].map(item =>(
-                            <ProductCard  key={item.id} product={item} />
-                        ))}
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     )

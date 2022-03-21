@@ -1,113 +1,142 @@
 {
-    "star-wars": [
+    "categories": [
         {
             "id": 1,
+            "name": "Star wars"
+        },
+        {
+            "id": 2,
+            "name": "Consoles"
+        },
+        {
+            "id": 1,
+            "name": "Diversos"
+        }
+    ],
+    "products": [
+        {},
+        {
+            "id": 1,
+            "category": "Star wars",
             "name": "Caneca Stormtrooper",
             "price": "R$ 60,00",
             "img" : "/images/products/star-wars/1.jpg"
         }, 
         {
             "id": 2,
+            "category": "Star wars",
             "name": "Capacetes Vader e Trooper",
             "price": "R$ 60,00",
             "img" : "/images/products/star-wars/2.jpg"
         },
         {
             "id": 3,
+            "category": "Star wars",
             "name": "Yoda",
             "price": "R$ 60,00",
             "img" : "/images/products/star-wars/3.jpg"
         },
         {
             "id": 4,
+            "category": "Star wars",
             "name": "Stormtrooper",
             "price": "R$ 60,00",
             "img" : "/images/products/star-wars/4.jpg"
         },
         {
             "id": 5,
+            "category": "Star wars",
             "name": "Baby-Yoda",
             "price": "R$ 60,00",
             "img" : "/images/products/star-wars/5.jpg"
         },
         {
             "id": 6,
+            "category": "Star wars",
             "name": "Kylo Ren",
             "price": "R$ 60,00",
             "img" : "/images/products/star-wars/6.jpg"
-        }
-    ],
-    "consoles": [
+        },
         {
             "id": 7,
+            "category": "Consoles",
             "name": "Controle Xbox One",
             "price": "R$ 60,00",
             "img" : "/images/products/consoles/7.png"
         }, 
         {
             "id": 8,
+            "category": "Consoles",
             "name": "Playstation 5",
             "price": "R$ 60,00",
             "img" : "/images/products/consoles/8.png"
         },
         {
             "id": 9,
+            "category": "Consoles",
             "name": "Nintendo-NES",
             "price": "R$ 60,00",
             "img" : "/images/products/consoles/9.png"
         },
         {
             "id": 10,
+            "category": "Consoles",
             "name": "Nintendo Switch",
             "price": "R$ 60,00",
             "img" : "/images/products/consoles/10.png"
         },
         {
             "id": 11,
+            "category": "Consoles",
             "name": "Xbox series X",
             "price": "R$ 60,00",
             "img" : "/images/products/consoles/11.png"
         },
         {
             "id": 12,
+            "category": "Consoles",
             "name": "Game Boy",
             "price": "R$ 60,00",
             "img" : "/images/products/consoles/12.png"
-        }
-    ],
-    "diversos": [
+        },
         {
             "id": 13,
+            "category": "Diversos",
             "name": "Camiseta Atari",
             "price": "R$ 60,00",
             "img" : "/images/products/diversos/13.jpg"
         }, 
         {
             "id": 14,
+            "category": "Diversos",
             "name": "Camiseta NES",
             "price": "R$ 60,00",
             "img" : "/images/products/diversos/14.jpg"
         },
         {
             "id": 15,
+            "category": "Diversos",
             "name": "Sonic",
             "price": "R$ 60,00",
             "img" : "/images/products/diversos/15.jpg"
         },
         {
             "id": 16,
+            "category": "Diversos",
             "name": "Despertador vintage",
             "price": "R$ 60,00",
             "img" : "/images/products/diversos/16.jpg"
         },
         {
             "id": 17,
+            "category": "Diversos",
             "name": "VR",
             "price": "R$ 60,00",
             "img" : "/images/products/diversos/17.jpg"
         },
         {
             "id": 18,
+            "category": "Diversos",
             "name": "Pikachu",
             "price": "R$ 60,00",
             "img" : "/images/products/diversos/18.jpg"

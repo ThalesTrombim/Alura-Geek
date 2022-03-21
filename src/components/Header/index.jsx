@@ -6,7 +6,9 @@ function Header() {
     return (
         <div className={style.headerContainer}>
             <div className={style.LogoSearch}>
-                <Image src="/images/Logo.png" alt="Alura Geek" width={176} height={50} />
+                <Link passHref href={'/'}>
+                    <Image src="/images/Logo.png" alt="Alura Geek" width={176} height={50} />
+                </Link>
                 <input type="text" placeholder='O que deseja encontrar?' />
                 <span className={style.lupa}>
                     <Image src="/icons/lupa.png" alt="Procurar" width={17} height={17} />
