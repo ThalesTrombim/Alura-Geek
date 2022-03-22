@@ -88,3 +88,63 @@
     display: flex;
     justify-content: space-between;
 }
+$layout-breakpoint-small: 430px;
+$layout-breakpoint-medium: 800px;
+@media (max-width: $layout-breakpoint-medium) {
+    .homeBanner {
+        padding: 0 16px;
+        background:rgba(0, 0, 0, 0.5) url('/images/hero-mobile.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-blend-mode: darken;
+        h2 {
+            font-size: 52px;
+        }
+        p {
+            font-size: 22px;
+        }
+        
+    }
+
+    .productsArea {
+        max-width: 100%;
+        overflow-x: hidden;
+        padding: 64px 16px;
+    }
+
+    .productsList {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        row-gap: 16px;
+        column-gap: 16px;
+    }
+}
+@media (max-width: $layout-breakpoint-small) {
+    .homeBanner {
+        padding: 0 16px;
+        background:rgba(0, 0, 0, 0.5) url('/images/hero-mobile.jpg');
+        background-size: cover;
+        background-position: center center;
+        background-blend-mode: darken;
+        h2 {
+            font-size: 22px;
+        }
+        p, a {
+            font-size: 14px;
+        }
+        
+    }
+
+    .productsArea {
+        max-width: 100%;
+        overflow-x: hidden;
+        padding: 64px 16px;
+    }
+
+    .productsList {
+        display: grid;
+        grid-template-columns: auto auto;
+        row-gap: 16px;
+        column-gap: 16px;
+    }
+}

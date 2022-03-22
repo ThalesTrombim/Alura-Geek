@@ -1,5 +1,6 @@
 import style from './style.module.scss';
 import Image from 'next/image';
+import { ButtonLink } from '../ButtonLink';
 
 function Footer() {
     return (
@@ -25,6 +26,10 @@ function Footer() {
                     <div>Nome</div>
                     <input type="text" />
                     <textarea placeholder='Escreva sua mensagem' />
+
+                    <ButtonLink link={'/message'} size='151' inverse>
+                        Enviar mensagem
+                    </ButtonLink>
                 </form>
             </main>
             <footer>

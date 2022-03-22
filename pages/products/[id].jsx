@@ -1,5 +1,5 @@
 import style from './style.module.scss';
-import products from '../../products.json';
+import db from '../../db.json';
 import Image from 'next/image';
 import { ProductCard } from '../../src/components/ProductCard';
 
@@ -21,7 +21,7 @@ export default function ProductItem({product}) {
                 <h3>Produtos similares</h3>
                 <div>
                     {
-                        products.products.slice(2, 8).map(item => (
+                        db.products.slice(2, 8).map(item => (
                             <ProductCard key={item.id} product={item}/>
                         ))
                     }
@@ -32,8 +32,8 @@ export default function ProductItem({product}) {
 }
 
 export async function getServerSideProps(context) {
-    const id = context.params.id;
-    const prod = products.products[id]
+    const id = parseInt(context.params.id);
+    const prod = db.products.find(v => v.id === id)
 
     return {
         props: {

@@ -1,6 +1,7 @@
 import style from './style.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ButtonLink } from '../ButtonLink';
 
 function Header() {
     return (
@@ -16,10 +17,18 @@ function Header() {
             </div>
             
             <span className={style.loginButton}>
-                <Link className={style.teste} href={'/login'}>
+                <ButtonLink link={'/login'}>
                     Login
-                </Link>
+                </ButtonLink>
             </span>
+
+            <div className={style.headerMobile}>
+                <Image src="/images/Logo.png" alt="Alura Geek" width={'100px'} height={'28px'} />
+                <ButtonLink link={'/login'} size='133'>
+                    Login
+                </ButtonLink>
+                <Image src="/icons/lupa-mobile.png" alt="Procurar" width={'17px'} height={'17px'} />
+            </div>
         </div>
     )
 }

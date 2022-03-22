@@ -1,6 +1,6 @@
 import style from './style.module.scss';
 import Link from 'next/link';
-import products from '../../../products.json'
+import db from '../../../db.json'
 import { ProductCard } from '../../components/ProductCard';
 import { VscArrowRight } from 'react-icons/vsc';
 
@@ -19,7 +19,7 @@ function Home() {
                 </div>
             </div>
             <div className={style.productsArea}>
-                {products.categories.map(item => (
+                {db.categories.map(item => (
                     <div key={item.id} className={style.productContainer}>
                         <>
                             <header>
@@ -32,7 +32,7 @@ function Home() {
                                 </span>
                             </header>
                             <div className={style.productsList}>
-                                {products.products.map(product =>(
+                                {db.products.map(product =>(
                                     product.category === item.name && (
                                         <ProductCard  key={product.id} product={product} />
                                     )

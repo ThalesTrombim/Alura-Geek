@@ -7,6 +7,18 @@ function ProductCard({product}) {
     return (
         <div className={style.productContainer}>
             <Image src={img} alt={name} width={176} height={174} />
+            {/* <div className={style.editArea}>
+                <span>
+                    <Link href={`/products/edit/${id}`} passHref>
+                        <Image src='/icons/edit-icon.png' alt={name} width={'18px'} height={'18px'} />
+                    </Link>
+                </span>
+                <span>
+                    <Link href={`/products/edit/${id}`} passHref>
+                        <Image src='/icons/trash-icon.png' alt={name} width={'14px'} height={'18px'} />
+                    </Link>
+                </span>
+            </div> */}
             <p>{name}</p>
             <span>{price}</span>
             <div>

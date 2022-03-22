@@ -1,5 +1,6 @@
 .productContainer {
     max-width: 176px;
+    min-width: 156px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -23,4 +24,18 @@
         font-weight: 700;
         font-size: 16px;
     }
+
+    &:hover .editArea{
+         display: flex;
+    }
+}
+
+.editArea {
+    display: none;
+    position: absolute;
+    justify-content: flex-end;
+    gap: 24px;
+    margin-top: 11px;
+    margin-left: calc(176px - 67px);
+    cursor: pointer;
 }

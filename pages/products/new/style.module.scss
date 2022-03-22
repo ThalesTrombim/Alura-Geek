@@ -1,0 +1,83 @@
+.newProductContainer {
+    max-width: 1440px;
+    margin: auto;
+    padding: 64px 0;
+    background: var(--gray-login);
+}
+
+.contentContainer {
+    max-width: 559px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    h2 {
+        font-size: 32px;
+    }
+
+    button {
+        background: var(--blue);
+        border: none;
+        height: 51px;
+        font-size: 16px;
+        color: var(--white);
+    }
+}
+
+.inputFile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.labelInputFile {
+    width: 239px;
+    height: 51px;
+    border: 1px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--blue);
+        color: var(--white);
+    }
+}
+
+.dropFile {
+    width: 282px;
+    height: 152px;
+    background: var(--white);
+    border: 1px solid #CCC;
+    border-style: dashed;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    gap: 16px;
+    text-align: center;
+}
+
+.inputsArea {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.inputDefault {
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    height: 56px;
+    border-radius: 4px;
+
+    input {
+        outline: 0;
+        border: none;
+        font-size: 16px;
+    }
+}
