@@ -19,9 +19,9 @@ export default function ProductItem({product}) {
 
             <div className={style.similarProducts}>
                 <h3>Produtos similares</h3>
-                <div>
+                <div className={style.productsList}>
                     {
-                        db.products.slice(2, 8).map(item => (
+                        db.products.slice(1, 7).map(item => (
                             <ProductCard key={item.id} product={item}/>
                         ))
                     }
