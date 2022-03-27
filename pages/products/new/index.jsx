@@ -32,6 +32,12 @@ export default function NewProduct() {
                         </label>
                         <input id='product_price' type="text"/>
                     </div>
+                    <div className={style.textarea}>
+                        <label htmlFor="product_desc">
+                            Descrição do produto
+                        </label>
+                        <textarea maxLength={230} id='product_desc'></textarea>
+                    </div>
                 </div>
                 <button>Adicionar produto</button>
             </div>

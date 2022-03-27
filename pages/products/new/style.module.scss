@@ -21,6 +21,7 @@
         height: 51px;
         font-size: 16px;
         color: var(--white);
+        cursor: pointer;
     }
 }
 
@@ -79,5 +80,63 @@
         outline: 0;
         border: none;
         font-size: 16px;
+    }
+}
+
+.textarea {
+    background: var(--white);
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 12px;
+    border-radius: 4px;
+    
+    textarea {
+        outline: 0;
+        border: none;
+        font-size: 16px;
+        resize: none;
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+$layout-breakpoint-small: 430px;
+$layout-breakpoint-medium: 800px;
+@media (max-width: $layout-breakpoint-medium) {
+    .newProductContainer {
+        padding: 32px;
+        margin: 0;
+    }
+    .contentContainer {
+        max-width: 100%;
+        h2 {
+            font-size: 22px;
+        }
+    }
+    .inputFile {
+        width: 80%;
+    }
+
+}
+@media (max-width: $layout-breakpoint-small) {
+    .newProductContainer {
+        padding: 16px;
+        
+        h2 {
+            text-align: center;
+        }
+    }
+    .inputFile {
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dropFile, .labelInputFile {
+        width: 100%;
+    }
+    .textarea {
+        height: 170px;
     }
 }
