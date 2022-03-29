@@ -9,7 +9,7 @@ export default function NewProduct() {
 
     async function addProduct({ name, price, desc}) {
         const res = await api.post('/products', { name, price, desc})
-
+        
     }
 
     return (
