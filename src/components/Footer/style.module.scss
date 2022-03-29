@@ -16,13 +16,14 @@
 .footerMain {
     display: flex;
     gap: 112px;
-    padding: 64px 0 70px 0;
+    margin: auto;
+    padding: 64px 16px 70px 16px;
     max-width: 1136px;
 }
 
 .footerLeft {
     display: flex;
-    gap: 112px;
+    gap: 50px;
 
     ul {
         display: flex;
@@ -117,7 +118,7 @@ $layout-breakpoint-medium: 800px;
     }
     .footerForm {
         width: 100%;
-
+        
         input, div {
             width: 100%;
         }

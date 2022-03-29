@@ -35,6 +35,11 @@
         font-size: 18px;
         font-weight: 600;
         color: var(--white);
+        cursor: pointer;
+
+        &:hover {
+           filter: brightness(.90); 
+        }
     }
 }
 

@@ -1,13 +1,22 @@
-import style from './style.module.scss';
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+
+import { api } from '../../../src/services/api';
+import style from './style.module.scss';
 
 export default function NewProduct() {
+    const { register, handleSubmit } = useForm();
+
+    async function addProduct({ name, price, desc}) {
+        const res = await api.post('/products', { name, price, desc})
+
+    }
 
     return (
         <div className={style.newProductContainer}>
-            <div className={style.contentContainer}>
+            <form onSubmit={handleSubmit(addProduct)} className={style.contentContainer}>
                 <h2>Adicionar novo produto</h2>
-                <div className={style.inputFile}>
+                <div className={style.inputFile} >
                     <div className={style.dropFile}>
                         <Image src={'/icons/input-file.png'} width={'32px'} height={'32px'} alt='Arraste para adicionar uma imagem para o produto'/>
                         <p>Arraste para adicionar uma imagem para o produto</p>
@@ -24,23 +33,23 @@ export default function NewProduct() {
                         <label htmlFor="product_name">
                             Nome do produto
                         </label>
-                        <input id='product_name' type="text"/>
+                        <input id='product_name' type="text" name='name' {...register('name')}/>
                     </div>
-                    <div className={style.inputDefault}>
+                    <div className={style.inputDefault} name='name' {...register('name')}>
                         <label htmlFor="product_price">
                             Preço do produto
                         </label>
-                        <input id='product_price' type="text"/>
+                        <input id='product_price' type="text" name='price' {...register('price')}/>
                     </div>
                     <div className={style.textarea}>
                         <label htmlFor="product_desc">
                             Descrição do produto
                         </label>
-                        <textarea maxLength={230} id='product_desc'></textarea>
+                        <textarea maxLength={230} id='product_desc' name='desc' {...register('desc')}></textarea>
                     </div>
                 </div>
                 <button>Adicionar produto</button>
-            </div>
+            </form>
         </div>
     )
 }

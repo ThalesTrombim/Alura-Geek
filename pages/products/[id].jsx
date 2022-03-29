@@ -1,5 +1,5 @@
 import style from './style.module.scss';
-import db from '../../db.json';
+import db from '../../backend/db.json';
 import Image from 'next/image';
 import { ProductCard } from '../../src/components/ProductCard';
 

@@ -1,6 +1,6 @@
 import style from './style.module.scss';
 import Link from 'next/link';
-import db from '../../../db.json'
+import db from '../../../backend/db.json'
 import { ProductCard } from '../../components/ProductCard';
 import { VscArrowRight } from 'react-icons/vsc';
 
@@ -33,7 +33,7 @@ function Home() {
                             </header>
                             <div className={style.productsList}>
                                 {db.products.map(product =>(
-                                    product.category === item.name && (
+                                    product.category === item.id && (
                                         <ProductCard  key={product.id} product={product} />
                                     )
                                 ))}

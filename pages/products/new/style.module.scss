@@ -76,6 +76,10 @@
     height: 56px;
     border-radius: 4px;
 
+    label {
+        cursor: text;
+    }
+
     input {
         outline: 0;
         border: none;
