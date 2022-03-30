@@ -4,9 +4,15 @@ import Image from 'next/image';
 
 function ProductCard({product}) {
     const { id, name, price, img } = product;
+        console.log(img)
+
     return (
         <div className={style.productContainer}>
-            <Image src={img} alt={name} width={176} height={174} />
+            <Link passHref href={`/products/${id}`}>
+                <a>
+                    <Image src={img} alt={name} width={176} height={174} />
+                </a>
+            </Link>
             {/* <div className={style.editArea}>
                 <span>
                     <Link href={`/products/edit/${id}`} passHref>

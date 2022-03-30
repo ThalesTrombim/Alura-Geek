@@ -1,25 +1,79 @@
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { set, useForm } from 'react-hook-form';
 
 import { api } from '../../../src/services/api';
 import style from './style.module.scss';
+import db from '../../../backend/db.json';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
+    const [ img, setImg ] = useState('')
+    
+    const categories = db.categories;
 
-    async function addProduct({ name, price, desc}) {
-        const res = await api.post('/products', { name, price, desc})
+    async function addProduct({ category, name, price, desc}) {
+        await api.post('/products', { category, name, price, desc, img, })
+
+        const categoryExists = await api.get(`/categories?name=${category}`)
+
+        if(categoryExists.data == ''){
+            await api.post('/categories', { name: category })
+        }
+
+        setImg('')
+        cleanForm()
+    }
+
+    function dropHandler(e) {
+        console.log('dropHandler',e)
+        var imageUrl = e.dataTransfer.getData('URL');
+
+        if (e.dataTransfer.items) {
+            var file = e.dataTransfer.items[0].getAsFile();
+        } 
+
+        setImg(imageUrl)
+
+    }
+    function dragOverHandler(e) {
         
     }
+
+    function cleanForm() {
+        const inputs = document.getElementsByClassName('cleanForm')
+
+        for(var i = 0; i < inputs.length; i++){
+            inputs[i].value = '';
+        }
+
+    }
+
 
     return (
         <div className={style.newProductContainer}>
             <form onSubmit={handleSubmit(addProduct)} className={style.contentContainer}>
                 <h2>Adicionar novo produto</h2>
                 <div className={style.inputFile} >
-                    <div className={style.dropFile}>
-                        <Image src={'/icons/input-file.png'} width={'32px'} height={'32px'} alt='Arraste para adicionar uma imagem para o produto'/>
-                        <p>Arraste para adicionar uma imagem para o produto</p>
+                    <div 
+                        className={style.dropFile} 
+                        onDrop={(e) => { e.preventDefault(), dropHandler(e)}} 
+                        onDragOver={(event) => { event.preventDefault(), dragOverHandler(event)}}
+                        style={{
+                            backgroundImage: `url(${img})`, 
+                            backgroundPosition: 'center center',
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                        }}
+                    >
+                        {
+                            !img && (
+                                <>
+                                    <Image src={'/icons/input-file.png'} width={'32px'} height={'32px'} alt='Arraste para adicionar uma imagem para o produto'/>
+                                    <p>Arraste para adicionar uma imagem para o produto</p>
+                                </>
+                            )
+                        }
                     </div>
                     Ou
                     <label htmlFor="input_file" className={style.labelInputFile}>
@@ -33,19 +87,30 @@ export default function NewProduct() {
                         <label htmlFor="product_name">
                             Nome do produto
                         </label>
-                        <input id='product_name' type="text" name='name' {...register('name')}/>
+                        <input className='cleanForm' id='product_name' type="text" name='name' {...register('name')}/>
                     </div>
-                    <div className={style.inputDefault} name='name' {...register('name')}>
+                    <div className={style.inputDefault}>
                         <label htmlFor="product_price">
                             Preço do produto
                         </label>
-                        <input id='product_price' type="text" name='price' {...register('price')}/>
+                        <input className='cleanForm' id='product_price' type="text" name='price' {...register('price')}/>
+                    </div>
+                    <div className={style.inputDefault}>
+                        <label htmlFor="product_category">
+                            Categoria
+                        </label>
+                        <datalist id="suggestions">
+                            { categories.map(({ id, name}) => (
+                                <option key={id} value={name}/>
+                            ))}
+                        </datalist>
+                        <input list="suggestions" className='cleanForm' id='product_category' type="text" name='category' {...register('category')}/>
                     </div>
                     <div className={style.textarea}>
                         <label htmlFor="product_desc">
                             Descrição do produto
                         </label>
-                        <textarea maxLength={230} id='product_desc' name='desc' {...register('desc')}></textarea>
+                        <textarea className='cleanForm' maxLength={230} id='product_desc' name='desc' {...register('desc')}></textarea>
                     </div>
                 </div>
                 <button>Adicionar produto</button>

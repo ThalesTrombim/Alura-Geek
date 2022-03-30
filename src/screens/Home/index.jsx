@@ -33,7 +33,7 @@ function Home() {
                             </header>
                             <div className={style.productsList}>
                                 {db.products.map(product =>(
-                                    product.category === item.id && (
+                                    product.category === item.name && (
                                         <ProductCard  key={product.id} product={product} />
                                     )
                                 ))}
