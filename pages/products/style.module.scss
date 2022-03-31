@@ -2,7 +2,7 @@
     background: var(--gray-login);
     max-width: 1440px;
     margin: auto;
-    padding: 64px;
+    padding: 64px 16px;
 }
 
 .productInfo {
@@ -33,6 +33,10 @@
     margin: auto;
     margin-top: 64px;
     max-width: 1136px;
+    overflow-x: scroll;
+    padding-bottom: 16px;
+
+
     div {
         display: flex;
         justify-content: space-between;

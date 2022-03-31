@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Router from 'next/router';
 
 import style from './style.module.scss';
 import { ButtonLink } from '../ButtonLink';
+import { api } from '../../services/api';
+import { SearchContext } from '../../contexts/SearchContext';
 
 function Header() {
-    const [ searchActive, setSearchActive ] = useState(false)
+    const [ search, setSearch ] = useState('')
+    const [ searchActive, setSearchActive ] = useState(false);
+    const { setResultSearch } = useContext(SearchContext);
 
+    async function searchProduct(search) {
+        const result = await api.get(`/products/?q=${search}`)
+        const product = await result.data
+
+        setResultSearch(product);
+        Router.push('/products/results')
+    }
+    
     return (
         <div className={style.headerContainer}>
             <div className={style.LogoSearch}>
@@ -16,8 +29,20 @@ function Header() {
                         <Image src="/images/Logo.png" alt="Alura Geek" width={176} height={50} />
                     </a>
                 </Link>
-                <input type="text" placeholder='O que deseja encontrar?' />
-                <span className={style.lupa}>
+                <input 
+                    type="text" 
+                    placeholder='O que deseja encontrar?' 
+                    onKeyPress={(e) => {
+                        if(e.key === 'Enter') {
+                            searchProduct(search)
+                        }
+                    }}
+                    onChange={e => {
+                        const val = e.target.value;
+                        setSearch(val)
+                    }}
+                />
+                <span className={style.lupa} onClick={() => searchProduct(search)}>
                     <Image src="/icons/lupa.png" alt="Procurar" width={17} height={17} />
                 </span>
             </div>
@@ -32,11 +57,26 @@ function Header() {
                 {
                     searchActive ? (
                         <>
-                            <input type="text" placeholder='O que deseja encontrar?' className={style.inputMobile}/>
+                            <input 
+                                type="text" 
+                                placeholder='O que deseja encontrar?' 
+                                className={style.inputMobile}
+                                onKeyPress={(e) => {
+                                    if(e.key === 'Enter') {
+                                        searchProduct(search)
+                                    }
+                                }}
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setSearch(val)
+                                }}
+                            />
                             <span className={style.lupa}>
                                 <Image onClick={() => { setSearchActive(false)}} src="/icons/close.png" alt="Procurar" width={17} height={17} />
                             </span>
-                            <Image onClick={() => console.log('click')} src="/icons/lupa-mobile.png" alt="Procurar" width={'17px'} height={'17px'} />
+                            <span onClick={() => searchProduct(search)}>
+                                <Image src="/icons/lupa-mobile.png" alt="Procurar" width={'17px'} height={'17px'} />
+                            </span>
                         </>
                     ) : ( 
                         <>

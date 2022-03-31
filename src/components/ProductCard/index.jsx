@@ -4,7 +4,6 @@ import Image from 'next/image';
 
 function ProductCard({product}) {
     const { id, name, price, img } = product;
-        console.log(img)
 
     return (
         <div className={style.productContainer}>

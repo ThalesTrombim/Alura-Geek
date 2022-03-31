@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "backend": "json-server --watch ./backend/db.json -m ./node_modules/json-server-auth --port 4000"
+    "backend": "json-server --watch ./backend/db.json -m ./node_modules/json-server-auth --routes ./backend/routes.json --port 4000"
   },
   "dependencies": {
     "@types/react": "^17.0.43",
