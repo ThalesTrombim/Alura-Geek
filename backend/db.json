@@ -160,6 +160,13 @@
       "id": 1,
       "admin": true,
       "name": "Thales"
+    },
+    {
+      "email": "admin@email.com",
+      "password": "$2a$10$Q9o9kHbjDBMSJLzZ9uhvX.4GPSDVXvbiJzbjsfl/fYsX2pOmDcLlW",
+      "id": 1,
+      "admin": true,
+      "name": "Thales"
     }
   ]
 }

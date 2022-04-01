@@ -1,10 +1,16 @@
-import style from './style.module.scss';
+import { useContext } from 'react';
 import Image from 'next/image';
+
+import style from './style.module.scss';
+
 import { ButtonLink } from '../ButtonLink';
+import { DropDownContext } from '../../contexts/DropDownContext';
 
 function Footer() {
+    const { handleSetDropDown } = useContext(DropDownContext)
+
     return (
-        <div className={style.footerContainer}>
+        <div className={style.footerContainer} onClick={handleSetDropDown}>
             <main className={style.footerMain}>
                 <div className={style.footerLeft}>
                     <div>

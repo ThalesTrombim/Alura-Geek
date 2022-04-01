@@ -25,7 +25,7 @@ function Home() {
                             <header>
                                 <h3>{item.name}</h3>
                                 <span>
-                                    <Link href={'/products'}>
+                                    <Link href={'/products/all'}>
                                         Ver tudo
                                     </Link>
                                     <VscArrowRight />

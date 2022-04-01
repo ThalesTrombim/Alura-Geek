@@ -10,7 +10,6 @@ function LoginPage() {
 
     async function handleSign(data) {
         const res = await signIn(data)
-        console.log(res)
     }
 
     return (

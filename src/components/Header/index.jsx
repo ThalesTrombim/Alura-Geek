@@ -7,11 +7,20 @@ import style from './style.module.scss';
 import { ButtonLink } from '../ButtonLink';
 import { api } from '../../services/api';
 import { SearchContext } from '../../contexts/SearchContext';
+import { AuthContext } from '../../contexts/AuthContext';
+import { DropDownContext } from '../../contexts/DropDownContext';
 
 function Header() {
     const [ search, setSearch ] = useState('')
     const [ searchActive, setSearchActive ] = useState(false);
+    const { dropDown, setDropDown, handleSetDropDown } = useContext(DropDownContext)
     const { setResultSearch } = useContext(SearchContext);
+    const { user } = useContext(AuthContext);
+    let nameUser;
+    
+    if(user){
+        nameUser = user.name;
+    }
 
     async function searchProduct(search) {
         const result = await api.get(`/products/?q=${search}`)
@@ -20,9 +29,9 @@ function Header() {
         setResultSearch(product);
         Router.push('/products/results')
     }
-    
+
     return (
-        <div className={style.headerContainer}>
+        <div className={style.headerContainer} onClick={handleSetDropDown}>
             <div className={style.LogoSearch}>
                 <Link passHref href={'/'}>
                     <a>
@@ -47,11 +56,35 @@ function Header() {
                 </span>
             </div>
             
-            <span className={style.loginButton}>
-                <ButtonLink link={'/login'}>
-                    Login
-                </ButtonLink>
-            </span>
+            <div className={style.loginButton}>
+                {
+                    !user ? (
+                        <ButtonLink link={'/login'}>
+                            Login
+                        </ButtonLink>
+                    ) : (
+                        <div className={style.dropDowContainer}>
+                            <p onClick={() => setDropDown(!dropDown)}>Olá, { nameUser }</p>
+                            {
+                                dropDown && (
+                                    <div id='dropdown' className={style.dropDown}>
+                                        <span>
+                                            <Link href={'/products/new'}>
+                                                Adicionar produtos
+                                            </Link>
+                                        </span>
+                                        <span>
+                                            <Link href={'/products/edit'}>
+                                                Gerenciar produtos
+                                            </Link>
+                                        </span>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    )
+                }
+            </div>
 
             <div className={style.headerMobile}>
                 {

@@ -39,4 +39,8 @@
     margin-top: 11px;
     margin-left: calc(176px - 67px);
     cursor: pointer;
+
+    img:hover {
+        filter: brightness(.9);
+    }
 }

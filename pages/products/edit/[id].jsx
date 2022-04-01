@@ -1,6 +1,11 @@
+import { useContext } from 'react';
+import { DropDownContext } from '../../../src/contexts/DropDownContext';
+
 export default function EditProduct() {
+    const { handleSetDropDown } = useContext(DropDownContext)
+
     return (
-        <div >
+        <div onClick={handleSetDropDown}>
             <div >
                 <div >
                     {/* <Image src={product.img} alt="Alura Geek" width={'560px'} height={'403px'} /> */}

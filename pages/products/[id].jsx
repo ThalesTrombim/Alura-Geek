@@ -1,11 +1,16 @@
+import { useContext } from 'react';
+import Image from 'next/image';
+
 import style from './style.module.scss';
 import db from '../../backend/db.json';
-import Image from 'next/image';
+
 import { ProductCard } from '../../src/components/ProductCard';
+import { DropDownContext } from '../../src/contexts/DropDownContext';
 
 export default function ProductItem({product}) {
+    const { handleSetDropDown } = useContext(DropDownContext)
     return (
-        <div className={style.productContainer}>
+        <div className={style.productContainer} onClick={handleSetDropDown}>
             <div className={style.productInfo}>
                 <div className={style.imgContainer}>
                     <Image src={product.img} alt="Alura Geek" width={'560px'} height={'403px'} />

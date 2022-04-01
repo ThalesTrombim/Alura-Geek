@@ -1,15 +1,16 @@
+import { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Image from 'next/image';
-import { useState } from 'react';
-import { set, useForm } from 'react-hook-form';
 
-import { api } from '../../../src/services/api';
 import style from './style.module.scss';
 import db from '../../../backend/db.json';
+import { api } from '../../../src/services/api';
+import { DropDownContext } from '../../../src/contexts/DropDownContext'
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
     const [ img, setImg ] = useState('')
-    
+    const { handleSetDropDown } = useContext(DropDownContext);
     const categories = db.categories;
 
     async function addProduct({ category, name, price, desc}) {
@@ -26,7 +27,7 @@ export default function NewProduct() {
     }
 
     function dropHandler(e) {
-        console.log('dropHandler',e)
+        
         var imageUrl = e.dataTransfer.getData('URL');
 
         if (e.dataTransfer.items) {
@@ -51,7 +52,7 @@ export default function NewProduct() {
 
 
     return (
-        <div className={style.newProductContainer}>
+        <div className={style.newProductContainer} onClick={handleSetDropDown}>
             <form onSubmit={handleSubmit(addProduct)} className={style.contentContainer}>
                 <h2>Adicionar novo produto</h2>
                 <div className={style.inputFile} >
