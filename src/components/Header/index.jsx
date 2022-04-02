@@ -17,9 +17,9 @@ function Header() {
     const { setResultSearch } = useContext(SearchContext);
     const { user } = useContext(AuthContext);
     let nameUser;
-    
+
     if(user){
-        nameUser = user.name;
+        nameUser = user.username;
     }
 
     async function searchProduct(search) {

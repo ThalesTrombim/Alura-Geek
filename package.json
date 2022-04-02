@@ -10,6 +10,7 @@
     "backend": "json-server --watch ./backend/db.json -m ./node_modules/json-server-auth --routes ./backend/routes.json --port 4000"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^1.33.2",
     "@types/react": "^17.0.43",
     "axios": "^0.26.1",
     "font-awesome": "^4.7.0",
