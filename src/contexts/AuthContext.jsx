@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { api } from '../services/api';
 import { setCookie, parseCookies } from 'nookies';
 import Router from 'next/router';
+import { supabaseAdmin, supabaseClient } from '../services/supabaseClient';
 
 export const AuthContext = createContext({})
 
@@ -15,35 +16,37 @@ export function AuthProvider({ children }) {
         const { 'alurageek.token': token } = parseCookies();
         const { 'alurageek.userId': id } = parseCookies();
 
-        if(id){
-            api.get(`users/${id}`)
-            .then(res => {
-                const user = res.data;
-
-                setUser(user);
-            })
-                     
+        if(token){
+            supabaseClient.auth.api.getUser(token)
+                .then(({ user }) => {
+                    const res = supabaseClient.from('profiles').select('*').eq('id', user.id)
+                    return res
+                })
+                .then(({data}) => {
+                    setUser(data[0])
+                })
         }
 
     }, [])
 
     async function signIn({ email, password }) {
-        const res = await api.post('/login', {
+        const { user, session } = await supabaseClient.auth.signIn({
             email,
-            password
+            password,
         })
-        const { accessToken, user } = res.data;
-        setUser(user);
 
-        setCookie(undefined, 'alurageek.token', accessToken, {
+        const { data } = await supabaseClient.from('profiles').select('*').eq('id', user.id)
+
+        setUser(data[0])
+
+        const token = session.access_token;
+
+        setCookie(undefined, 'alurageek.token', token, {
             maxAge: 60 * 60 * 1, // 1 hour
         })
 
-        setCookie(undefined, 'alurageek.userId', user.id, {
-            maxAge: 60 * 60 * 1, // 1 hour
-        })
-        
         Router.push('/')
+        
     }
 
     return (
