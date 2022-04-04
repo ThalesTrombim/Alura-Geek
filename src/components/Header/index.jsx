@@ -9,6 +9,7 @@ import { api } from '../../services/api';
 import { SearchContext } from '../../contexts/SearchContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { DropDownContext } from '../../contexts/DropDownContext';
+import { supabaseClient } from '../../services/supabaseClient';
 
 function Header() {
     const [ search, setSearch ] = useState('')
@@ -23,10 +24,10 @@ function Header() {
     }
 
     async function searchProduct(search) {
-        const result = await api.get(`/products/?q=${search}`)
-        const product = await result.data
+        const result = await supabaseClient.from('products').select()
+        .filter(["name", "category"], 'ilike', `%${search}%`)
 
-        setResultSearch(product);
+        setResultSearch(result.data);
         Router.push('/products/results')
     }
 

@@ -6,6 +6,7 @@ import style from './style.module.scss';
 import db from '../../../backend/db.json';
 import { api } from '../../../src/services/api';
 import { DropDownContext } from '../../../src/contexts/DropDownContext'
+import { supabaseClient } from '../../../src/services/supabaseClient';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
@@ -50,6 +51,32 @@ export default function NewProduct() {
 
     }
 
+    async function imageSupa(e){
+        console.log('chamou')
+        // console.log(e)
+        const productImage = e.target.files[0]
+
+        await supabaseClient
+        .storage
+        .from('images')
+        .upload('products/avatar1.png', productImage, {
+            cacheControl: '3600',
+            upsert: false
+        })
+            
+
+        verify()
+        // console.log(res)
+    }
+
+    async function verify() {
+        const { publicURL, error } = supabaseClient
+            .storage
+            .from('images')
+            .getPublicUrl('products/avatar1.png')
+            console.log(publicURL)
+    }
+
 
     return (
         <div className={style.newProductContainer} onClick={handleSetDropDown}>
@@ -80,7 +107,7 @@ export default function NewProduct() {
                     <label htmlFor="input_file" className={style.labelInputFile}>
                         Procure no seu computador
                     </label>
-                    <input type="file" id='input_file' style={{display: 'none'}}/>
+                    <input onChange={e =>imageSupa(e)} type="file" id='input_file' style={{display: 'none'}}/>
                 </div>
 
                 <div className={style.inputsArea}>

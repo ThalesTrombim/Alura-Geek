@@ -14,7 +14,6 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const { 'alurageek.token': token } = parseCookies();
-        const { 'alurageek.userId': id } = parseCookies();
 
         if(token){
             supabaseClient.auth.api.getUser(token)

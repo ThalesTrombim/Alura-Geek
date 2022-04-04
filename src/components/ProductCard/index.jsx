@@ -10,11 +10,9 @@ function ProductCard({ product, edit = false }) {
 
     return (
         <div className={style.productContainer}>
-            <Link passHref href={`/products/${id}`}>
-                <a>
+                <a href={`/products/${id}`}>
                     <Image src={img} alt={name} width={176} height={174} />
                 </a>
-            </Link>
             {
                 edit && (
                     <>

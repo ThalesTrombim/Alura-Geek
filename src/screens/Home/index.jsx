@@ -1,10 +1,9 @@
 import style from './style.module.scss';
 import Link from 'next/link';
-import db from '../../../backend/db.json'
 import { ProductCard } from '../../components/ProductCard';
 import { VscArrowRight } from 'react-icons/vsc';
 
-function Home() {
+function Home({ categories, products }) {
     return(
         <div className={style.container}>
             <div className={style.homeBanner}>   
@@ -19,7 +18,7 @@ function Home() {
                 </div>
             </div>
             <div className={style.productsArea}>
-                {db.categories.map(item => (
+                {categories.map(item => (
                     <div key={item.id} className={style.productContainer}>
                         <>
                             <header>
@@ -32,8 +31,8 @@ function Home() {
                                 </span>
                             </header>
                             <div className={style.productsList}>
-                                {db.products.map(product =>(
-                                    product.category === item.name && (
+                                {products.map(product =>(
+                                    product.category === item.id && (
                                         <ProductCard  key={product.id} product={product} />
                                     )
                                 ))}
@@ -46,4 +45,4 @@ function Home() {
     )
 }
 
-export { Home };
+export { Home }
