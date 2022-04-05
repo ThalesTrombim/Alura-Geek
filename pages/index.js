@@ -3,7 +3,7 @@ import { supabaseClient } from '../src/services/supabaseClient';
 
 export default Home;
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
     const productsList = await supabaseClient.from('products').select()
     const categoriesList = await supabaseClient.from('categories').select().order('id')
     

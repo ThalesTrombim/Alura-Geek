@@ -4,8 +4,8 @@ import Link from 'next/link';
 import Router from 'next/router';
 
 import style from './style.module.scss';
+
 import { ButtonLink } from '../ButtonLink';
-import { api } from '../../services/api';
 import { SearchContext } from '../../contexts/SearchContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { DropDownContext } from '../../contexts/DropDownContext';

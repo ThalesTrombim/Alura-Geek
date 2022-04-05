@@ -29,8 +29,8 @@ function Footer() {
                 </div>
                 <form className={style.footerForm}>
                     <h4>Fale conosco</h4>
-                    <div>Nome</div>
-                    <input type="text" />
+                    <label htmlFor='faq_name' >Nome</label>
+                    <input id='faq_name' type="text" />
                     <textarea placeholder='Escreva sua mensagem' />
 
                     <ButtonLink link={'/message'} size='151' inverse>

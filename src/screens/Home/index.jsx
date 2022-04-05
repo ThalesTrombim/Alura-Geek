@@ -1,11 +1,15 @@
-import style from './style.module.scss';
-import Link from 'next/link';
-import { ProductCard } from '../../components/ProductCard';
 import { VscArrowRight } from 'react-icons/vsc';
+import Link from 'next/link';
+
+import style from './style.module.scss';
+
+import { ProductCard } from '../../components/ProductCard';
+import { NextHead } from '../../components/Head';
 
 function Home({ categories, products }) {
     return(
         <div className={style.container}>
+            <NextHead desc={'Produtos com Descontos no mês de abril'}>Home</NextHead>
             <div className={style.homeBanner}>   
                 <div className={style.bannerContent}>
                     <h2>Março Promocional</h2>
