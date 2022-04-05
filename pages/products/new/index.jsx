@@ -14,7 +14,8 @@ export default function NewProduct() {
     const [ img, setImg ] = useState('');
     const { handleSetDropDown } = useContext(DropDownContext);
     const [ categories, setCategories ] = useState('')
-
+    // const [ categoryID, setCategoryID ] = useState('');
+ 
     useEffect(() => {
         const fetchData = async () => {
             const { data } = await supabaseClient.from('categories').select()
@@ -26,50 +27,71 @@ export default function NewProduct() {
 
     async function addProduct({ category, name, price, desc }, e) {
         // var categoryChosen = document.querySelector(`#suggestions option[value='${category}']`)
+        
 
-        // if(categoryChosen){
-        //     setCategory(categoryChosen.getAttribute('datavalue'))
-        // } else {
-        //     const idCategory = async () => {
-        //         if(!categories.find(el => el.name ===  category)){
-        //             const { data, error } = await supabaseClient
-        //             .from('categories')
-        //             .insert([
-        //                 { name: category }
-        //             ])
-    
-        //             console.log(data[0])
-        //         }
-        //     }
-        // }
+        const categoryExisting = categories.find(el => el.name ===  category);
 
-        console.log(categoryId)
-        return;
+        if(!categoryExisting){
+            const { data, error } = await supabaseClient
+            .from('categories')
+            .insert([
+                { name: category }
+            ])
+
+            var categoryID = await data[0].id
+        } else {
+            var categoryID = categoryExisting.id
+        }
+
         if(!img){
             const imgUrl = await imageUpload(name, e)
 
-            
+            try {
+                const { data, error } = await supabaseClient
+                .from('products')
+                .insert([
+                    { name, category: categoryID, price, desc, img: imgUrl }
+                ])
 
+                console.log(data)
+            } catch (e) {
+                console.log(e)
+            }
 
+            cleanForm()
+            return
+        } 
+
+        try {
             const { data, error } = await supabaseClient
             .from('products')
             .insert([
-                { name, category, price, desc, img: imgUrl }
+                { name, category: categoryID, price, desc, img }
             ])
 
-            
+            console.log(data)
+        } catch (e) {
+            console.log(e)
         }
 
+        setImg('')
+        cleanForm()
+        return
     }
 
     async function imageUpload(name, event){
         const productImage = event.target['local_image'].files[0];
         const count = v4() // UUID
 
+        var formatedName = name.replace(/[^a-zA-Zs]/g, "");
+        formatedName.normalize("NFD").replace(' ', '')
+
+        console.log(formatedName);
+
         await supabaseClient
         .storage
         .from('images')
-        .upload(`products/${name}${count}.jpg`, productImage, {
+        .upload(`products/${formatedName}${count}.jpg`, productImage, {
             cacheControl: '3600',
             upsert: false
         })
@@ -77,7 +99,7 @@ export default function NewProduct() {
         const { publicURL, error } = supabaseClient
             .storage
             .from('images')
-            .getPublicUrl(`products/${name}.jpg`)
+            .getPublicUrl(`products/${formatedName}${count}.jpg`)
 
         return publicURL;
     }
@@ -87,13 +109,7 @@ export default function NewProduct() {
         e.preventDefault()
 
         var imageUrl = e.dataTransfer.getData('URL');
-
-        if (e.dataTransfer.items) {
-            var file = e.dataTransfer.items[0].getAsFile();
-            imageSupa(file)
-            return
-        } 
-
+        
         setImg(imageUrl)
 
     }
@@ -117,6 +133,7 @@ export default function NewProduct() {
                         className={style.dropFile} 
                         onDrop={(e) => dropHandler(e)}
                         onDragOver={(event) => { event.preventDefault()}}
+                        name='local_image'
                         style={{
                             backgroundImage: `url(${img})`, 
                             backgroundPosition: 'center center',
@@ -137,7 +154,7 @@ export default function NewProduct() {
                     <label htmlFor="input_file" className={style.labelInputFile}>
                         Procure no seu computador
                     </label>
-                    <input name='local_image' onChange={e => imageSupa(e)} type="file" id='input_file' style={{display: 'none'}}/>
+                    <input name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
                 </div>
 
                 <div className={style.inputsArea}>
