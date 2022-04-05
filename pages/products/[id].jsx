@@ -2,12 +2,16 @@ import { useContext } from 'react';
 import Image from 'next/image';
 
 import style from './style.module.scss';
-import db from '../../backend/db.json';
 
 import { ProductCard } from '../../src/components/ProductCard';
 import { DropDownContext } from '../../src/contexts/DropDownContext';
+import { supabaseClient } from '../../src/services/supabaseClient';
 
-export default function ProductItem({product}) {
+export default function ProductItem({ product, similar }) {
+
+    console.log('q',product)
+    console.log(similar)
+
     const { handleSetDropDown } = useContext(DropDownContext)
     return (
         <div className={style.productContainer} onClick={handleSetDropDown}>
@@ -17,7 +21,7 @@ export default function ProductItem({product}) {
                 </div>
                 <div className={style.productText}>
                     <h3>{product.name}</h3>
-                    <span>{product.price}</span>
+                    <span>{`R$ ${product.price}`}</span>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat corrupti possimus laborum alias illum sit accusantium voluptate voluptates, eos quo nemo, laudantium molestiae, qui sapiente ut? Quasi pariatur magnam qui!</p>
                 </div>
             </div>
@@ -26,7 +30,7 @@ export default function ProductItem({product}) {
                 <h3>Produtos similares</h3>
                 <div className={style.productsList}>
                     {
-                        db.products.slice(1, 7).map(item => (
+                        similar.map(item => (
                             <ProductCard key={item.id} product={item}/>
                         ))
                     }
@@ -38,11 +42,20 @@ export default function ProductItem({product}) {
 
 export async function getServerSideProps(context) {
     const id = parseInt(context.params.id);
-    const prod = db.products.find(v => v.id === id)
+    const { data } = await supabaseClient.from('products').select().eq('id', id)
 
+    const category = data[0].category;
+    const similarProducts = await supabaseClient.from('products').select()
+        .eq('category', category)
+        .filter('id', 'neq', id)
+
+    const product = data[0]
+    const similar = similarProducts.data
+    
     return {
         props: {
-            product: prod,
+            product,
+            similar
         }
     };
 }

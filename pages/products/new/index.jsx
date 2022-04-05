@@ -1,44 +1,117 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
+import { v4 } from 'uuid';
 
 import style from './style.module.scss';
-import db from '../../../backend/db.json';
-import { api } from '../../../src/services/api';
+
 import { DropDownContext } from '../../../src/contexts/DropDownContext'
+import { supabaseClient } from '../../../src/services/supabaseClient';
+import { NextHead } from '../../../src/components/Head';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
-    const [ img, setImg ] = useState('')
+    const [ img, setImg ] = useState('');
     const { handleSetDropDown } = useContext(DropDownContext);
-    const categories = db.categories;
+    const [ categories, setCategories ] = useState('')
+    // const [ categoryID, setCategoryID ] = useState('');
+ 
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await supabaseClient.from('categories').select()
+            setCategories(data);
+        }
+        
+        fetchData()
+    }, [])
 
-    async function addProduct({ category, name, price, desc}) {
-        await api.post('/products', { category, name, price, desc, img, })
+    async function addProduct({ category, name, price, desc }, e) {
+        // var categoryChosen = document.querySelector(`#suggestions option[value='${category}']`)
+        
 
-        const categoryExists = await api.get(`/categories?name=${category}`)
+        const categoryExisting = categories.find(el => el.name ===  category);
 
-        if(categoryExists.data == ''){
-            await api.post('/categories', { name: category })
+        if(!categoryExisting){
+            const { data, error } = await supabaseClient
+            .from('categories')
+            .insert([
+                { name: category }
+            ])
+
+            var categoryID = await data[0].id
+        } else {
+            var categoryID = categoryExisting.id
+        }
+
+        if(!img){
+            const imgUrl = await imageUpload(name, e)
+
+            try {
+                const { data, error } = await supabaseClient
+                .from('products')
+                .insert([
+                    { name, category: categoryID, price, desc, img: imgUrl }
+                ])
+
+                console.log(data)
+            } catch (e) {
+                console.log(e)
+            }
+
+            cleanForm()
+            return
+        } 
+
+        try {
+            const { data, error } = await supabaseClient
+            .from('products')
+            .insert([
+                { name, category: categoryID, price, desc, img }
+            ])
+
+            console.log(data)
+        } catch (e) {
+            console.log(e)
         }
 
         setImg('')
         cleanForm()
+        return
+    }
+
+    async function imageUpload(name, event){
+        const productImage = event.target['local_image'].files[0];
+        const count = v4() // UUID
+
+        var formatedName = name.replace(/[^a-zA-Zs]/g, "");
+        formatedName.normalize("NFD").replace(' ', '')
+
+        console.log(formatedName);
+
+        await supabaseClient
+        .storage
+        .from('images')
+        .upload(`products/${formatedName}${count}.jpg`, productImage, {
+            cacheControl: '3600',
+            upsert: false
+        })
+
+        const { publicURL, error } = supabaseClient
+            .storage
+            .from('images')
+            .getPublicUrl(`products/${formatedName}${count}.jpg`)
+
+        return publicURL;
     }
 
     function dropHandler(e) {
         
+        e.preventDefault()
+
         var imageUrl = e.dataTransfer.getData('URL');
-
-        if (e.dataTransfer.items) {
-            var file = e.dataTransfer.items[0].getAsFile();
-        } 
-
+        
         setImg(imageUrl)
 
-    }
-    function dragOverHandler(e) {
-        
     }
 
     function cleanForm() {
@@ -50,16 +123,17 @@ export default function NewProduct() {
 
     }
 
-
     return (
         <div className={style.newProductContainer} onClick={handleSetDropDown}>
+            <NextHead>Cadastrar produto</NextHead>
             <form onSubmit={handleSubmit(addProduct)} className={style.contentContainer}>
                 <h2>Adicionar novo produto</h2>
                 <div className={style.inputFile} >
                     <div 
                         className={style.dropFile} 
-                        onDrop={(e) => { e.preventDefault(), dropHandler(e)}} 
-                        onDragOver={(event) => { event.preventDefault(), dragOverHandler(event)}}
+                        onDrop={(e) => dropHandler(e)}
+                        onDragOver={(event) => { event.preventDefault()}}
+                        name='local_image'
                         style={{
                             backgroundImage: `url(${img})`, 
                             backgroundPosition: 'center center',
@@ -80,7 +154,7 @@ export default function NewProduct() {
                     <label htmlFor="input_file" className={style.labelInputFile}>
                         Procure no seu computador
                     </label>
-                    <input type="file" id='input_file' style={{display: 'none'}}/>
+                    <input name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
                 </div>
 
                 <div className={style.inputsArea}>
@@ -101,9 +175,12 @@ export default function NewProduct() {
                             Categoria
                         </label>
                         <datalist id="suggestions">
-                            { categories.map(({ id, name}) => (
-                                <option key={id} value={name}/>
-                            ))}
+                            {
+                                categories && 
+                                    categories.map(({ id, name}) => (
+                                    <option key={id} value={name} datavalue={id} />
+                                ))
+                            }
                         </datalist>
                         <input list="suggestions" className='cleanForm' id='product_category' type="text" name='category' {...register('category')}/>
                     </div>
@@ -114,7 +191,7 @@ export default function NewProduct() {
                         <textarea className='cleanForm' maxLength={230} id='product_desc' name='desc' {...register('desc')}></textarea>
                     </div>
                 </div>
-                <button>Adicionar produto</button>
+                <button type='submit'>Adicionar produto</button>
             </form>
         </div>
     )

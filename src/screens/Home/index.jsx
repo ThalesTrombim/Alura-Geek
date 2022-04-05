@@ -1,12 +1,15 @@
-import style from './style.module.scss';
-import Link from 'next/link';
-import db from '../../../backend/db.json'
-import { ProductCard } from '../../components/ProductCard';
 import { VscArrowRight } from 'react-icons/vsc';
+import Link from 'next/link';
 
-function Home() {
+import style from './style.module.scss';
+
+import { ProductCard } from '../../components/ProductCard';
+import { NextHead } from '../../components/Head';
+
+function Home({ categories, products }) {
     return(
         <div className={style.container}>
+            <NextHead desc={'Produtos com Descontos no mês de abril'}>Home</NextHead>
             <div className={style.homeBanner}>   
                 <div className={style.bannerContent}>
                     <h2>Março Promocional</h2>
@@ -19,7 +22,7 @@ function Home() {
                 </div>
             </div>
             <div className={style.productsArea}>
-                {db.categories.map(item => (
+                {categories.map(item => (
                     <div key={item.id} className={style.productContainer}>
                         <>
                             <header>
@@ -32,8 +35,8 @@ function Home() {
                                 </span>
                             </header>
                             <div className={style.productsList}>
-                                {db.products.map(product =>(
-                                    product.category === item.name && (
+                                {products.map(product =>(
+                                    product.category === item.id && (
                                         <ProductCard  key={product.id} product={product} />
                                     )
                                 ))}
@@ -46,4 +49,4 @@ function Home() {
     )
 }
 
-export { Home };
+export { Home }
