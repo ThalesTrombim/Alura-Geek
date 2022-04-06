@@ -1,17 +1,18 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 
-import db from '../../../backend/db.json';
 import style from './style.module.scss';
 
 import { ProductCard } from '../../../src/components/ProductCard';
 import { DropDownContext } from '../../../src/contexts/DropDownContext';
 import { AuthContext } from '../../../src/contexts/AuthContext';
+import { supabaseClient } from '../../../src/services/supabaseClient';
 
-export default function AllProducts() {
+export default function AllProducts({ products }) {
     const { user } = useContext(AuthContext)
     const { handleSetDropDown } = useContext(DropDownContext);
     
+
     return (
         <div className={style.allProductsContainer} onClick={handleSetDropDown}>
             <div className={style.content}>
@@ -28,7 +29,7 @@ export default function AllProducts() {
                 </header>
                 <div className={style.productsContainer}>
                     {
-                        db.products.map(product => (
+                        products.map(product => (
                             <ProductCard key={product.id} product={product} edit />
                         ))
                     }
@@ -37,4 +38,30 @@ export default function AllProducts() {
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    var products;
+    const category = context.query.category;
+
+    if(category){
+    const categoriesID = await supabaseClient
+    .from('categories')
+    .select()
+    .filter("name", 'ilike', `%${category}%`)
+
+    const categoryId = categoriesID.data[0].id
+        const productsList = await supabaseClient.from('products').select().eq('category', categoryId)
+        products = productsList.data
+    } else {
+        const productsList = await supabaseClient.from('products').select()
+        products = productsList.data 
+    }
+
+    console.log(products)
+    return {
+        props: {
+            products
+        },
+    }
 }
