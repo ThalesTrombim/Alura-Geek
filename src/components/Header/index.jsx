@@ -75,7 +75,7 @@ function Header() {
                                             </Link>
                                         </span>
                                         <span>
-                                            <Link href={'/products/edit'}>
+                                            <Link href={'/products/all'}>
                                                 Gerenciar produtos
                                             </Link>
                                         </span>

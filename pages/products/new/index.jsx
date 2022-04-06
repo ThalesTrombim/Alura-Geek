@@ -14,7 +14,6 @@ export default function NewProduct() {
     const [ img, setImg ] = useState('');
     const { handleSetDropDown } = useContext(DropDownContext);
     const [ categories, setCategories ] = useState('')
-    // const [ categoryID, setCategoryID ] = useState('');
  
     useEffect(() => {
         const fetchData = async () => {
@@ -26,9 +25,6 @@ export default function NewProduct() {
     }, [])
 
     async function addProduct({ category, name, price, desc }, e) {
-        // var categoryChosen = document.querySelector(`#suggestions option[value='${category}']`)
-        
-
         const categoryExisting = categories.find(el => el.name ===  category);
 
         if(!categoryExisting){
