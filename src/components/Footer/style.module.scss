@@ -41,7 +41,7 @@
     flex-direction: column;
     gap: 16px;
 
-    div {
+    label {
         width: 560px;
         background: white;
         margin-bottom: -16px;
@@ -49,12 +49,14 @@
         font-size: 12px;
         border-radius: 4px;
         color: var(--gray-text);
+        cursor: text;
     }
     input {
         width: 560px;
         height: 36px;
         outline: 0;
-        padding: 8px 12px;
+        padding: 0 12px;
+        padding-bottom: 8px;
         border: none;
         font-size: 16px;
         border-radius: 4px;
@@ -69,9 +71,23 @@
         font-size: 16px;
         resize: none;
         border-radius: 4px;
-        color: var(--gray-text);
+        color: var(--gray-dark);
         font-family: Raleway, sans-serif;
         box-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.submitForm{
+    background: var(--blue);
+    padding: 16px;
+    font-size: 16px;
+    width: 35%;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    
+    &:hover{
+        filter: brightness(1.2);
     }
 }
 
@@ -103,6 +119,9 @@ $layout-breakpoint-medium: 800px;
             font-size: 14px;
         }
     }
+    .submitForm{
+        width: 50%;
+    }
 }
 @media (max-width: $layout-breakpoint-small) {
     .footerMain, .footerLeft {
@@ -126,5 +145,9 @@ $layout-breakpoint-medium: 800px;
         a {
             font-size: 14px;
         }
+    }
+
+    .submitForm{
+        width: 100%;
     }
 }

@@ -7,15 +7,32 @@ import { ProductCard } from '../../components/ProductCard';
 import { NextHead } from '../../components/Head';
 
 function Home({ categories, products }) {
+    const months = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ]
+
+    var month = months[new Date().getMonth()]
+
     return(
         <div className={style.container}>
             <NextHead desc={'Produtos com Descontos no mês de abril'}>Home</NextHead>
             <div className={style.homeBanner}>   
                 <div className={style.bannerContent}>
-                    <h2>Março Promocional</h2>
+                    <h2>{month} Promocional</h2>
                     <p>Produtos selecionados com 33% de desconto</p>
                     <span>
-                        <Link href={'/consoles'}>
+                        <Link href={'/products/all?category=consoles'}>
                             Ver Consoles
                         </Link>
                     </span>
