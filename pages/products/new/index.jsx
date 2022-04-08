@@ -8,13 +8,15 @@ import { DropDownContext } from '../../../src/contexts/DropDownContext'
 import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
 import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
+import { render } from 'react-dom';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
     const [ img, setImg ] = useState('');
     const { handleSetDropDown } = useContext(DropDownContext);
-    const [ categories, setCategories ] = useState('')
-    const { imageUpload, dropHandler } = useContext(ManageProductContext)
+    const [ categories, setCategories ] = useState('');
+    const { imageUpload, dropHandler } = useContext(ManageProductContext);
+    const [ imgPrev, setImgPrev ] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,6 +26,19 @@ export default function NewProduct() {
         
         fetchData()
     }, [])
+
+    function imagePreview(e) {
+        console.log(e)
+        
+        let file = e.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+            setImg(event.target.result)
+        };
+        
+        reader.readAsDataURL(file)
+    }
 
     async function addProduct({ category, name, price, desc }, e) {
         const categoryExisting = categories.find(el => el.name ===  category);
@@ -116,7 +131,13 @@ export default function NewProduct() {
                     <label htmlFor="input_file" className={style.labelInputFile}>
                         Procure no seu computador
                     </label>
-                    <input name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
+                    <input 
+                        name='local_image' 
+                        type="file" 
+                        id='input_file' 
+                        style={{display: 'none'}}
+                        onChange={e => imagePreview(e)}
+                    />
                 </div>
 
                 <div className={style.inputsArea}>
