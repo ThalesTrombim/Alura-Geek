@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Router, useRouter } from 'next/router';
 
 import style from './style.module.scss';
 
@@ -8,7 +9,6 @@ import { DropDownContext } from '../../../src/contexts/DropDownContext';
 import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
 import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
-import { Router } from 'next/router';
 
 export default function EditProduct({ product, categories }) {
     const { register, handleSubmit } = useForm();
@@ -16,8 +16,9 @@ export default function EditProduct({ product, categories }) {
     const { dropHandler, imageUpload } = useContext(ManageProductContext);
     const [ editedProduct, setEditedProduct ] = useState(product);
     const [ localImg, setLocalImg ] = useState(false);
+    const [ img, setImg ] = useState(editedProduct.img)
+    const router = useRouter()
 
-    console.log(editedProduct.img)
     async function categoryId(category){
         const nameCategory = `${category[0].toUpperCase()}${category.slice(1)}`
         const categoryExisting = categories.find(el => {
@@ -66,6 +67,20 @@ export default function EditProduct({ product, categories }) {
 
     }
 
+    function imagePreview(e) {
+        
+        let file = e.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(event) {
+            setImg(event.target.result)
+        };
+        
+        reader.readAsDataURL(file)
+    }
+
+    console.log(editedProduct)
+
     return (
         <div className={style.editContainer} onClick={handleSetDropDown}>
             <NextHead>Cadastrar produto</NextHead>
@@ -75,11 +90,14 @@ export default function EditProduct({ product, categories }) {
                 <main className={style.main}>
                     <div 
                         className={style.dropFile} 
-                        onDrop={(e) => setEditedProduct({...editedProduct, img: dropHandler(e)})}
+                        onDrop={(e) => {
+                            setEditedProduct({...editedProduct, img: dropHandler(e)});
+                            setImg(dropHandler(e))
+                        }}
                         onDragOver={(event) => { event.preventDefault()}}
                         name='local_image'
                         style={{
-                            backgroundImage: `url(${editedProduct.img})`, 
+                            backgroundImage: `url(${img})`, 
                             backgroundPosition: 'center center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
@@ -93,7 +111,7 @@ export default function EditProduct({ product, categories }) {
                     <label htmlFor="input_file" className={style.labelInputFile}>
                         Procure no seu computador
                     </label>
-                    <input onChange={() => setLocalImg(true)} name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
+                    <input onChange={(e) => {setLocalImg(true); imagePreview(e)}} name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
                 </main>
 
                 <div className={style.inputsArea}>
@@ -181,7 +199,16 @@ export default function EditProduct({ product, categories }) {
                         </textarea>
                     </div>
                 </div>
-                <button type='submit'>Adicionar produto</button>
+
+                <div className={style.buttonArea}>
+                    <button 
+                        className={style.cancelButton} 
+                        onClick={() => router.back()}
+                    >
+                        Cancelar
+                    </button>
+                    <button className={style.confirmButton} type='submit'>Adicionar produto</button>
+                </div>
             </form>
         </div>
     )

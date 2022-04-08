@@ -7,6 +7,7 @@ export async function getStaticProps(context) {
     const productsList = await supabaseClient.from('products').select()
     const categoriesList = await supabaseClient.from('categories').select().order('id')
     
+    // .limit(6)
     const products = productsList.data
     const categories = categoriesList.data
 
