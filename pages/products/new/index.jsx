@@ -1,20 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
-import { v4 } from 'uuid';
 
 import style from './style.module.scss';
 
 import { DropDownContext } from '../../../src/contexts/DropDownContext'
 import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
+import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
     const [ img, setImg ] = useState('');
     const { handleSetDropDown } = useContext(DropDownContext);
     const [ categories, setCategories ] = useState('')
- 
+    const { imageUpload, dropHandler } = useContext(ManageProductContext)
+
     useEffect(() => {
         const fetchData = async () => {
             const { data } = await supabaseClient.from('categories').select()
@@ -75,41 +76,6 @@ export default function NewProduct() {
         return
     }
 
-    async function imageUpload(name, event){
-        const productImage = event.target['local_image'].files[0];
-        const count = v4() // UUID
-
-        var formatedName = name.replace(/[^a-zA-Zs]/g, "");
-        formatedName.normalize("NFD").replace(' ', '')
-
-        console.log(formatedName);
-
-        await supabaseClient
-        .storage
-        .from('images')
-        .upload(`products/${formatedName}${count}.jpg`, productImage, {
-            cacheControl: '3600',
-            upsert: false
-        })
-
-        const { publicURL, error } = supabaseClient
-            .storage
-            .from('images')
-            .getPublicUrl(`products/${formatedName}${count}.jpg`)
-
-        return publicURL;
-    }
-
-    function dropHandler(e) {
-        
-        e.preventDefault()
-
-        var imageUrl = e.dataTransfer.getData('URL');
-        
-        setImg(imageUrl)
-
-    }
-
     function cleanForm() {
         const inputs = document.getElementsByClassName('cleanForm')
 
@@ -127,7 +93,7 @@ export default function NewProduct() {
                 <div className={style.inputFile} >
                     <div 
                         className={style.dropFile} 
-                        onDrop={(e) => dropHandler(e)}
+                        onDrop={(e) => setImg(dropHandler(e))}
                         onDragOver={(event) => { event.preventDefault()}}
                         name='local_image'
                         style={{

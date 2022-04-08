@@ -7,12 +7,17 @@ import style from './style.module.scss';
 import { DropDownContext } from '../../../src/contexts/DropDownContext';
 import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
+import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
+import { Router } from 'next/router';
 
 export default function EditProduct({ product, categories }) {
-    const { register, handleSubmit } = useForm()
-    const { handleSetDropDown } = useContext(DropDownContext)
+    const { register, handleSubmit } = useForm();
+    const { handleSetDropDown } = useContext(DropDownContext);
+    const { dropHandler, imageUpload } = useContext(ManageProductContext);
     const [ editedProduct, setEditedProduct ] = useState(product);
+    const [ localImg, setLocalImg ] = useState(false);
 
+    console.log(editedProduct.img)
     async function categoryId(category){
         const nameCategory = `${category[0].toUpperCase()}${category.slice(1)}`
         const categoryExisting = categories.find(el => {
@@ -34,53 +39,61 @@ export default function EditProduct({ product, categories }) {
         return data[0].id
     }
 
-    console.log(editedProduct)
+    async function updateProduct(dataForm, e){
+        const category = await categoryId(editedProduct.categories.name)
+        let img = editedProduct.img
 
-    async function updateProduct(){
-        const teste = await categoryId(editedProduct.categories.name)
+        if(localImg){
+            img = await imageUpload(editedProduct.name, e)
+        }
 
-        console.log('teste', teste)
-        // const { data, error } = await supabaseClient
-        // .from('products')
-        // .update({ 
-        //     name: product.name,
-        //     category: 
-        // })
-        // .match({ name: 'Auckland' })
+        try {
+            const { data, error } = await supabaseClient
+            .from('products')
+            .update({ 
+                name: editedProduct.name,
+                category,
+                price: editedProduct.price,
+                desc: editedProduct.desc,
+                img
+            })
+            .match({ id:  editedProduct.id })
 
+            Router.push('products/all')
+        } catch(e) {
+            console.log(e)
+        }
 
     }
 
     return (
-
-        // <div>teste</div>
         <div className={style.editContainer} onClick={handleSetDropDown}>
             <NextHead>Cadastrar produto</NextHead>
             <form onSubmit={handleSubmit(updateProduct)} className={style.formContainer}>
                 <h2>Editar produto</h2>
-                <Image src={product.img} alt="Alura Geek" width={'250px'} height={'303px'} />
+                {/* <Image src={product.img} alt="Alura Geek" width={'250px'} height={'303px'} /> */}
                 <main className={style.main}>
                     <div 
                         className={style.dropFile} 
-                        onDrop={(e) => dropHandler(e)}
+                        onDrop={(e) => setEditedProduct({...editedProduct, img: dropHandler(e)})}
                         onDragOver={(event) => { event.preventDefault()}}
                         name='local_image'
                         style={{
-                            // backgroundImage: `url(${img})`, 
+                            backgroundImage: `url(${editedProduct.img})`, 
                             backgroundPosition: 'center center',
                             backgroundSize: 'cover',
                             backgroundRepeat: 'no-repeat',
                         }}
                     >
-                        <Image src={'/icons/input-file.png'} width={'32px'} height={'32px'} alt='Arraste para adicionar uma imagem para o produto'/>
-                        <p>Arraste para adicionar uma imagem para o produto</p>
+                        <Image className={style.hideHover} src={'/icons/input-file.png'} width={'32px'} height={'32px'} alt='Arraste para adicionar uma imagem para o produto'/>
+                        <p className={style.hideHover} >Arraste para adicionar uma imagem para o produto</p>
                     </div>
                     
                     Ou
                     <label htmlFor="input_file" className={style.labelInputFile}>
                         Procure no seu computador
                     </label>
-                    <input name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
+                    <input onChange={() => setLocalImg(true)} name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
                 </main>
 
                 <div className={style.inputsArea}>
