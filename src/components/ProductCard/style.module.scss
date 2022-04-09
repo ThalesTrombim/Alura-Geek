@@ -44,3 +44,15 @@
         filter: brightness(.9);
     }
 }
+
+$layout-breakpoint-small: 430px;
+@media (max-width: $layout-breakpoint-small) {
+    .productContainer {
+        max-width: 160px;
+    }
+
+    .editArea{
+        display: flex;
+        margin-left: 100px;
+   }
+}

@@ -9,6 +9,7 @@ import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
 import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
 import { render } from 'react-dom';
+import { Modal } from '../../../src/components/Modal';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
@@ -28,8 +29,6 @@ export default function NewProduct() {
     }, [])
 
     function imagePreview(e) {
-        console.log(e)
-        
         let file = e.target.files[0];
         var reader = new FileReader();
 
@@ -103,6 +102,7 @@ export default function NewProduct() {
     return (
         <div className={style.newProductContainer} onClick={handleSetDropDown}>
             <NextHead>Cadastrar produto</NextHead>
+            <Modal />
             <form onSubmit={handleSubmit(addProduct)} className={style.contentContainer}>
                 <h2>Adicionar novo produto</h2>
                 <div className={style.inputFile} >
@@ -129,7 +129,7 @@ export default function NewProduct() {
                     </div>
                     Ou
                     <label htmlFor="input_file" className={style.labelInputFile}>
-                        Procure no seu computador
+                        Procure no seu dispositivo
                     </label>
                     <input 
                         name='local_image' 
@@ -145,13 +145,13 @@ export default function NewProduct() {
                         <label htmlFor="product_name">
                             Nome do produto
                         </label>
-                        <input className='cleanForm' id='product_name' type="text" name='name' {...register('name')}/>
+                        <input required className='cleanForm' id='product_name' type="text" name='name' {...register('name')}/>
                     </div>
                     <div className={style.inputDefault}>
                         <label htmlFor="product_price">
                             Preço do produto
                         </label>
-                        <input className='cleanForm' id='product_price' type="text" name='price' {...register('price')}/>
+                        <input required className='cleanForm' id='product_price' type="text" name='price' {...register('price')}/>
                     </div>
                     <div className={style.inputDefault}>
                         <label htmlFor="product_category">
@@ -165,7 +165,7 @@ export default function NewProduct() {
                                 ))
                             }
                         </datalist>
-                        <input list="suggestions" className='cleanForm' id='product_category' type="text" name='category' {...register('category')}/>
+                        <input required list="suggestions" className='cleanForm' id='product_category' type="text" name='category' {...register('category')}/>
                     </div>
                     <div className={style.textarea}>
                         <label htmlFor="product_desc">
