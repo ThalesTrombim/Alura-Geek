@@ -4,12 +4,14 @@ import { supabaseClient } from '../src/services/supabaseClient';
 export default Home;
 
 export async function getStaticProps(context) {
-    const productsList = await supabaseClient.from('products').select()
     const categoriesList = await supabaseClient.from('categories').select().order('id')
-    
-    // .limit(6)
-    const products = productsList.data
     const categories = categoriesList.data
+    let products = [];
+
+    for(let i = 1; i < categories.length+1; i++){
+        const { data } = await supabaseClient.from('products').select().eq('category', i).limit(6)
+        data.map(product => products.push(product))
+    }
 
     return {
         props: {

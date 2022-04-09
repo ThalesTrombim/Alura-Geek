@@ -131,3 +131,26 @@
         background: red;
     }
 }
+$layout-breakpoint-small: 430px;
+$layout-breakpoint-medium: 800px;
+// @media (max-width: $layout-breakpoint-medium) {
+
+// }
+
+@media (max-width: $layout-breakpoint-small) {
+    .formContainer {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .main {
+        flex-direction: column;
+    }
+
+    .dropFile, .labelInputFile{
+        width: 100%;
+    }
+    .dropFile{
+        height: 220px;
+    }
+}

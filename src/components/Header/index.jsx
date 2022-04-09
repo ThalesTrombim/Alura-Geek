@@ -119,9 +119,35 @@ function Header() {
                                     <Image src="/images/Logo.png" alt="Alura Geek" width={'100px'} height={'28px'} />
                                 </a>
                             </Link>
-                            <ButtonLink  link={'/login'} size='133' className={style.loginButton}>
-                                Login
-                            </ButtonLink>
+
+                            {
+                                !user ? (
+                                    <ButtonLink  link={'/login'} size='133' className={style.loginButton}>
+                                        Login
+                                    </ButtonLink>
+                                ) : (
+                                    <div className={style.dropDowContainer}>
+                                        <p onClick={() => setDropDown(!dropDown)}>Olá, { nameUser }</p>
+                                        {
+                                            dropDown && (
+                                                <div id='dropdown' className={style.dropDown}>
+                                                    <span>
+                                                        <Link href={'/products/new'}>
+                                                            Adicionar produtos
+                                                        </Link>
+                                                    </span>
+                                                    <span>
+                                                        <Link href={'/products/all'}>
+                                                            Gerenciar produtos
+                                                        </Link>
+                                                    </span>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                )
+                            }
+                            
                             <Image onClick={() => { setSearchActive(true)}} src="/icons/lupa-mobile.png" alt="Procurar" width={'17px'} height={'17px'} />
                         </>
                     )

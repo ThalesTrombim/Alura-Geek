@@ -9,9 +9,6 @@ import { supabaseClient } from '../../src/services/supabaseClient';
 
 export default function ProductItem({ product, similar }) {
 
-    console.log('q',product)
-    console.log(similar)
-
     const { handleSetDropDown } = useContext(DropDownContext)
     return (
         <div className={style.productContainer} onClick={handleSetDropDown}>

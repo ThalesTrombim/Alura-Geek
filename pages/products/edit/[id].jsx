@@ -79,8 +79,6 @@ export default function EditProduct({ product, categories }) {
         reader.readAsDataURL(file)
     }
 
-    console.log(editedProduct)
-
     return (
         <div className={style.editContainer} onClick={handleSetDropDown}>
             <NextHead>Cadastrar produto</NextHead>
@@ -109,7 +107,7 @@ export default function EditProduct({ product, categories }) {
                     
                     Ou
                     <label htmlFor="input_file" className={style.labelInputFile}>
-                        Procure no seu computador
+                        Procure no seu dispositivo
                     </label>
                     <input onChange={(e) => {setLocalImg(true); imagePreview(e)}} name='local_image' type="file" id='input_file' style={{display: 'none'}}/>
                 </main>
