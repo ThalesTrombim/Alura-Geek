@@ -8,16 +8,16 @@ import { DropDownContext } from '../../../src/contexts/DropDownContext'
 import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
 import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
-import { render } from 'react-dom';
 import { Modal } from '../../../src/components/Modal';
+import { ModalContext } from '../../../src/contexts/ModalContext';
 
 export default function NewProduct() {
     const { register, handleSubmit } = useForm();
     const [ img, setImg ] = useState('');
     const { handleSetDropDown } = useContext(DropDownContext);
     const [ categories, setCategories ] = useState('');
-    const { imageUpload, dropHandler } = useContext(ManageProductContext);
-    const [ imgPrev, setImgPrev ] = useState('')
+    const { imageUpload, dropHandler, success, errorModal } = useContext(ManageProductContext);
+    const { setModalActive, messageModal, setMessageModal, setModalBody } = useContext(ModalContext)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -80,7 +80,15 @@ export default function NewProduct() {
                 { name, category: categoryID, price, desc, img }
             ])
 
-            console.log(data)
+            if(!error){
+                setModalBody(success)
+                setMessageModal('Produto cadastrado com sucesso')
+                setModalActive(true)
+            } else {
+                setModalBody(errorModal)
+                setModalActive(true)
+                setMessageModal('Não foi possível cadastrar o produto');
+            }
         } catch (e) {
             console.log(e)
         }
@@ -102,7 +110,7 @@ export default function NewProduct() {
     return (
         <div className={style.newProductContainer} onClick={handleSetDropDown}>
             <NextHead>Cadastrar produto</NextHead>
-            <Modal />
+            <Modal message={messageModal}/>
             <form onSubmit={handleSubmit(addProduct)} className={style.contentContainer}>
                 <h2>Adicionar novo produto</h2>
                 <div className={style.inputFile} >

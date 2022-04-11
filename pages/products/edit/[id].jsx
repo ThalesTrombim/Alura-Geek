@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import style from './style.module.scss';
 
@@ -9,14 +9,17 @@ import { DropDownContext } from '../../../src/contexts/DropDownContext';
 import { supabaseClient } from '../../../src/services/supabaseClient';
 import { NextHead } from '../../../src/components/Head';
 import { ManageProductContext } from '../../../src/contexts/ManageProductContext';
+import { Modal } from '../../../src/components/Modal';
+import { ModalContext } from '../../../src/contexts/ModalContext';
 
 export default function EditProduct({ product, categories }) {
     const { register, handleSubmit } = useForm();
     const { handleSetDropDown } = useContext(DropDownContext);
-    const { dropHandler, imageUpload } = useContext(ManageProductContext);
+    const { dropHandler, imageUpload, success, errorModal } = useContext(ManageProductContext);
     const [ editedProduct, setEditedProduct ] = useState(product);
     const [ localImg, setLocalImg ] = useState(false);
-    const [ img, setImg ] = useState(editedProduct.img)
+    const [ img, setImg ] = useState(editedProduct.img);
+    const { setModalActive, setModalBody, messageModal, setMessageModal, } = useContext(ModalContext);
     const router = useRouter()
 
     async function categoryId(category){
@@ -60,7 +63,19 @@ export default function EditProduct({ product, categories }) {
             })
             .match({ id:  editedProduct.id })
 
-            Router.push('products/all')
+            if(!error){
+                setModalBody(success)
+                setModalActive(true)
+                setMessageModal('Produto atualizado com sucesso')
+            } else {
+                setModalBody(errorModal)
+                setModalActive(true)
+                setMessageModal('Não foi possível editar o produto')
+            }
+
+            setTimeout(() => {
+                router.push('/products/all')
+            }, 3000)
         } catch(e) {
             console.log(e)
         }
@@ -82,6 +97,7 @@ export default function EditProduct({ product, categories }) {
     return (
         <div className={style.editContainer} onClick={handleSetDropDown}>
             <NextHead>Cadastrar produto</NextHead>
+            <Modal message={messageModal} />
             <form onSubmit={handleSubmit(updateProduct)} className={style.formContainer}>
                 <h2>Editar produto</h2>
                 {/* <Image src={product.img} alt="Alura Geek" width={'250px'} height={'303px'} /> */}
@@ -205,7 +221,7 @@ export default function EditProduct({ product, categories }) {
                     >
                         Cancelar
                     </button>
-                    <button className={style.confirmButton} type='submit'>Adicionar produto</button>
+                    <button className={style.confirmButton} type='submit'>Salvar</button>
                 </div>
             </form>
         </div>
