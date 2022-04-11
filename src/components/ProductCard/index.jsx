@@ -1,10 +1,11 @@
 import style from './style.module.scss'
 import Link from 'next/link';
 import Image from 'next/image';
+
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
-function ProductCard({ product, edit = false }) {
+function ProductCard({ product, edit = false, method }) {
     const { id, name, price, img } = product;
     const { user } = useContext(AuthContext);
 
@@ -26,12 +27,8 @@ function ProductCard({ product, edit = false }) {
                                             </a>
                                         </Link>
                                     </span>
-                                    <span>
-                                        <Link href={`/products/edit/${id}`} passHref>
-                                            <a>
-                                                <Image src='/icons/trash-icon.png' alt={name} width={'14px'} height={'18px'} />
-                                            </a>
-                                        </Link>
+                                    <span onClick={() => method(id)}>
+                                        <Image src='/icons/trash-icon.png' alt={name} width={'14px'} height={'18px'} />
                                     </span>
                                 </div>
                             )

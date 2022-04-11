@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import style from './style.module.scss';
 
@@ -74,7 +74,7 @@ export default function EditProduct({ product, categories }) {
             }
 
             setTimeout(() => {
-                Router.push('products/all')
+                router.push('/products/all')
             }, 3000)
         } catch(e) {
             console.log(e)

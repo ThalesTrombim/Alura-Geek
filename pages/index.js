@@ -8,8 +8,9 @@ export async function getStaticProps(context) {
     const categories = categoriesList.data
     let products = [];
 
-    for(let i = 1; i < categories.length+1; i++){
-        const { data } = await supabaseClient.from('products').select().eq('category', i).limit(6)
+    for(let i = 0; i < categories.length; i++){
+        const categoryId = categories[i].id
+        const { data } = await supabaseClient.from('products').select().eq('category', categoryId).limit(6).order('id')
         data.map(product => products.push(product))
     }
 

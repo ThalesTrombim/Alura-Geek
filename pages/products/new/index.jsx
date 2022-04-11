@@ -82,8 +82,8 @@ export default function NewProduct() {
 
             if(!error){
                 setModalBody(success)
-                setModalActive(true)
                 setMessageModal('Produto cadastrado com sucesso')
+                setModalActive(true)
             } else {
                 setModalBody(errorModal)
                 setModalActive(true)

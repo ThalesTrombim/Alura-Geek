@@ -19,7 +19,7 @@ export default function ProductItem({ product, similar }) {
                 <div className={style.productText}>
                     <h3>{product.name}</h3>
                     <span>{`R$ ${product.price}`}</span>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat corrupti possimus laborum alias illum sit accusantium voluptate voluptates, eos quo nemo, laudantium molestiae, qui sapiente ut? Quasi pariatur magnam qui!</p>
+                    <p>{ product.desc }</p>
                 </div>
             </div>
 
@@ -28,7 +28,11 @@ export default function ProductItem({ product, similar }) {
                 <div className={style.productsList}>
                     {
                         similar.map(item => (
-                            <ProductCard key={item.id} product={item}/>
+                            <ProductCard 
+                                key={item.id} 
+                                product={item} 
+                                method={handleDeleteProduct}
+                            />
                         ))
                     }
                 </div>

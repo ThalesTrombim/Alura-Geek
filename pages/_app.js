@@ -12,13 +12,13 @@ function MyApp({ Component, pageProps }) {
     <AuthProvider>
       <SearchProvider>
         <DropDownProvider>
-          <ManageProductProvider>
-            <ModalProvider>
+          <ModalProvider>
+            <ManageProductProvider>
               <Header />
               <Component {...pageProps} />
               <Footer />
-            </ModalProvider>
-          </ManageProductProvider>
+            </ManageProductProvider>
+          </ModalProvider>
         </DropDownProvider>
       </SearchProvider>
     </AuthProvider>

@@ -4,9 +4,9 @@ import { useContext, useEffect, useState } from 'react';
 import style from './style.module.scss';
 import { ModalContext } from '../../contexts/ModalContext';
 
-function Modal({ message, method }) {
-    const { modalActive, setModalActive } = useContext(ModalContext)
-    
+function Modal ({ method, id }) {
+    const { modalBody, modalActive, setModalActive, messageModal } = useContext(ModalContext)
+
     function handleModal(e) {
         if (e.target.id == "overlay") {
             setModalActive(false);
@@ -19,16 +19,17 @@ function Modal({ message, method }) {
                 <main className={style.modal}>
                     <Image src={ modalBody.img } width={'30px'} height={'30px'}  alt='Tem certeza? essa ação não pode ser desfeita'/>
                     <h3>{ modalBody.title }</h3>
-                    <span>{ message }</span>
+                    <span>{ messageModal }</span>
 
                     { modalBody.buttons && (
                             <div className={style.buttonArea}>
                                 <button
                                     className={style.cancelButton}
+                                    onClick={() => setModalActive(false)}
                                 >
                                     Cancelar
                                 </button>
-                                <button className={style.confirmButton}>
+                                <button onClick={() => method(id)} className={style.confirmButton}>
                                     Sim, deletar
                                 </button>
                             </div>
