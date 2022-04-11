@@ -7,6 +7,24 @@ export const ManageProductContext = createContext({})
 
 export function ManageProductProvider({ children }) {
     
+    const success = {
+        title: 'Sucesso',
+        img: '/icons/success.png',
+        buttons: false
+    }
+
+    const confirm = {
+        title: 'Tem Certeza',
+        img: '/icons/danger.png',
+        buttons: true
+    }
+
+    const errorModal = {
+        title: 'Erro',
+        img: '/img/erro.png',
+        buttons: false
+    }
+
     async function imageUpload(name, event){
         const productImage = event.target['local_image'].files[0];
         const count = v4() // UUID
@@ -41,7 +59,7 @@ export function ManageProductProvider({ children }) {
     }
 
     return (
-        <ManageProductContext.Provider value={{ imageUpload, dropHandler }}>
+        <ManageProductContext.Provider value={{ imageUpload, dropHandler, success, confirm, errorModal }}>
             { children }
         </ManageProductContext.Provider>
     )
