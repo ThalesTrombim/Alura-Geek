@@ -1,34 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Alurageek
 
-## Getting Started
+For english version [click here](#english)
 
-First, run the development server:
+## Sobre o projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Esse projeto foi desenvolvido no challenge Front-end da [Alura](https://www.alura.com.br/), onde o desafio era codar um e-commerce intitulado Alurageek. Simulando um fluxo de trabalho de uma empresa, os alunos recebiam em todo inicio de semana, as tarefas no trello que deveriam ser feitas ao decorrer da semana. Não havia nenhuma aula dedicada ao challenge, pois a idéia era usar o conhecimento que já temos, porém tinhamos a disposição também, indicação de cursos e artigos que poderiam nos ajudar nas tarefas.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔥 Features
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+  - Listar todos os produtos
+  - Visualizar página do produto
+  - pesquisar por produto ou categoria
+  - Adicionar produto (admin)
+  - Editar produto (admin)
+  - Excluir produto (admin)
+  - upload de imagem para o produto (admin)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## 🌟 Indo Além do desafio
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+ - Modal de resposta para o usuário(sucesso e erro)
+ - Integração com supabase
+ - autenticação do usuário com JWT(salvando dados nos cookies, assim o usuário não precisa refazer o login em um periodo de uma hora, caso saia e volte para o site).
 
-## Learn More
+## 💻 Tecnologias / Bibliotecas
 
-To learn more about Next.js, take a look at the following resources:
+  - NextJs
+  - Sass
+  - Supabase client
+  - Axios
+  - React-hook-forms
+  - Nookies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<div>
+   <img width='60' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />   
+   <img width='60' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" />
+</div>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Visitar
 
-## Deploy on Vercel
+<div id='english'>
+  # Alurageek
+  
+  ## About this project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  This project was developed in a front-end challenge of Alura school, where the challenge  was make a e-commerce website calls Alurageek, simulating a work-flow of a company, the students received at every beginning of the week, the tasks on trello that should be done during the week. There weren't lessons specify to the challenge, cause the idea was to use the knowledge we already had, but also we had, indication of courses and articles that could help us with our tasks.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 🔥 Features
+
+  - List all products
+  - view product page
+  - Search for product or category
+  - Add product (admin)
+  - Edit product (admin)
+  - Exclude product (admin)
+  - image upload for the product (admin)
+
+## 🌟 Going beyond the challenge
+
+ - response modal for user(error and success)
+ - Integration with subase
+ - User authentication with JWT(saving data in cookies, so the user does not have to re-login within an hour, if he leaves and returns to the site).
+
+## 💻 Technologies / Libs
+
+  - NextJs
+  - Sass
+  - Supabase client
+  - Axios
+  - React-hook-forms
+  - Nookies
+
+<div>
+   <img width='60' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />   
+   <img width='60' src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" />
+</div>
+
+## Visit
+  
+disclaimer, I'm still learning English, maybe there are some errors in the text.
+</div>
