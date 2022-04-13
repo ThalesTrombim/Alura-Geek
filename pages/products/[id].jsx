@@ -30,8 +30,7 @@ export default function ProductItem({ product, similar }) {
                         similar.map(item => (
                             <ProductCard 
                                 key={item.id} 
-                                product={item} 
-                                method={handleDeleteProduct}
+                                product={item}
                             />
                         ))
                     }

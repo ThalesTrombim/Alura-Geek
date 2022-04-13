@@ -5,6 +5,12 @@
     padding: 64px 16px;
 }
 
+.imgContainer{
+    img {
+        object-fit: cover;
+    }
+}
+
 .productInfo {
     max-width: 1136px;
     display: flex;

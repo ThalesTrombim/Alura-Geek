@@ -5,6 +5,12 @@
     flex-direction: column;
     gap: 8px;
 
+    .productImage {
+        width: 176px;
+        height: 174px;
+        object-fit: cover;
+    }
+
     p {
         font-size: 14px;
         font-weight: 500;
@@ -45,14 +51,16 @@
     }
 }
 
+$layout-breakpoint-medium: 800px;
 $layout-breakpoint-small: 430px;
-@media (max-width: $layout-breakpoint-small) {
-    .productContainer {
-        max-width: 160px;
-    }
-
+@media (max-width: $layout-breakpoint-medium) {
     .editArea{
         display: flex;
         margin-left: 100px;
    }
+}
+@media (max-width: $layout-breakpoint-small) {
+    .productContainer {
+        max-width: 160px;
+    }
 }
