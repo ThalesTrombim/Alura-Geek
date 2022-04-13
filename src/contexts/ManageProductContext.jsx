@@ -80,6 +80,7 @@ export function ManageProductProvider({ children }) {
 
         setTimeout(() => {
             router.push('/products/all')
+            setModalActive(false)
         }, 2000)
     }
 

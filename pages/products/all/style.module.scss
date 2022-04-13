@@ -40,9 +40,24 @@
 }
 
 .productsContainer {
+    display: grid;
     margin-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 16px;
+    grid-template-columns: auto auto auto auto;
+    row-gap: 16px;
+    column-gap: 134px;
+}
+
+$layout-breakpoint-medium: 800px;
+$layout-breakpoint-small: 430px;
+@media (max-width: $layout-breakpoint-medium) {
+    .productsContainer {
+        grid-template-columns: auto auto auto;
+        column-gap: 122px;
+    }
+}
+@media (max-width: $layout-breakpoint-small) {
+    .productsContainer {
+        grid-template-columns: auto auto;
+        column-gap: 16px;
+    }
 }

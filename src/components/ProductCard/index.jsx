@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
-function ProductCard({ product, edit = false, method }) {
+function ProductCard({ product, edit = false, method = false }) {
     const { id, name, price, img } = product;
     const { user } = useContext(AuthContext);
 
     return (
         <div className={style.productContainer}>
                 <a href={`/products/${id}`}>
-                    <Image src={img} alt={name} width={176} height={174} />
+                    <Image className={style.productImage} src={img} alt={name} width={'176px'} height={'174px'} />
                 </a>
             {
                 edit && (
@@ -27,7 +27,7 @@ function ProductCard({ product, edit = false, method }) {
                                             </a>
                                         </Link>
                                     </span>
-                                    <span onClick={() => method(id)}>
+                                    <span onClick={() => method(id, img)}>
                                         <Image src='/icons/trash-icon.png' alt={name} width={'14px'} height={'18px'} />
                                     </span>
                                 </div>
