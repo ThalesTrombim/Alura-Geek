@@ -76,6 +76,7 @@ Esse projeto foi desenvolvido no challenge Front-end da [Alura](https://www.alur
 </div>
 
 ## Visit
-  
+  [Alura geek](https://alura-geek-six.vercel.app/)
+ 
 disclaimer, I'm still learning English, maybe there are some errors in the text.
 </div>
