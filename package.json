@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "backend": "json-server --watch ./backend/db.json -m ./node_modules/json-server-auth --routes ./backend/routes.json --port 4000"
+    "lint": "next lint"
   },
   "dependencies": {
     "@supabase/supabase-js": "^1.33.2",
@@ -25,6 +24,8 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
     "eslint": "8.11.0",
     "eslint-config-next": "12.1.0",
     "json-server": "^0.17.0",
